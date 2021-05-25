@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_182643) do
+ActiveRecord::Schema.define(version: 2021_05_25_182948) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "games", force: :cascade do |t|
+    t.integer "status", limit: 2, default: 0
+    t.jsonb "moves", default: []
+    t.boolean "player_wins", default: false
+    t.bigint "player_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["player_id"], name: "index_games_on_player_id"
+  end
 
   create_table "players", force: :cascade do |t|
     t.string "name"
