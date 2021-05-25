@@ -83,7 +83,7 @@ Style/StringLiterals:
     - 'config/puma.rb'
     - 'db/seeds.rb'
     - 'test/application_system_test_case.rb'
-    - 'spec/rails_helper.rb'
+    - 'spec/**/*'
 
 # Offense count: 2
 # Cop supports --auto-correct.
