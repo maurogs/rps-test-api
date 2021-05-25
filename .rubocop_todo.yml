@@ -91,3 +91,7 @@ Style/StringLiterals:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+Rails/HasManyOrHasOneDependent:
+  Exclude:
+    - 'app/models/player.rb'
