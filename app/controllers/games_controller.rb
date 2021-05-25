@@ -1,6 +1,14 @@
 class GamesController < ApplicationController
+  DEFAULT_PAGE = 1
+  PER_PAGE = 5
+
   def index
-    render json: Game.all, each_serializer: GameSerializer
+    games = Game.all.paginate(
+      page: params[:page] || DEFAULT_PAGE,
+      per_page: params[:per_page] || PER_PAGE
+    )
+
+    render json: games, each_serializer: GameSerializer, meta: pagination(games)
   end
 
   def play
@@ -36,5 +44,15 @@ class GamesController < ApplicationController
 
   def play_params
     params.permit(:name, :move)
+  end
+
+  def pagination(collection)
+    {
+      current_page: collection.current_page,
+      next_page: collection.next_page,
+      prev_page: collection.previous_page,
+      total_pages: collection.total_pages,
+      total_count: collection.total_entries
+    }
   end
 end

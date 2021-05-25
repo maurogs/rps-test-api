@@ -60,9 +60,38 @@ RSpec.describe "Games", type: :request do
       expect(response).to have_http_status(:success)
     end
 
-    it "should respond to games" do
+    it "should respond to games and metadata" do
       get "/games"
       expect(response_json).to include('games')
+      expect(response_json).to include('meta')
+    end
+
+    it "should return a list of paginated games" do
+      p = Player.create(name: 'Marcellus')
+      10.times do
+        moves = [player_move(random_move), bot_move(random_move)]
+        Game.create!(player_id: p.id, status: 1, moves: moves, player_wins: [true, false].sample)
+      end
+
+      get "/games"
+      expect(response_json['games']).to be_a Array
+      expect(response_json['games'].length).to eq(5)
+      expect(response_json['games'][0].keys).to include('game_result', 'moves_list', 'played_at')
+    end
+
+    it "should return the second page games" do
+      p = Player.create(name: 'Marcellus')
+      10.times do
+        moves = [player_move(random_move), bot_move(random_move)]
+        Game.create!(player_id: p.id, status: 1, moves: moves, player_wins: [true, false].sample)
+      end
+
+      get "/games?page=2&per_page=2"
+      expect(response_json['games'].length).to eq(2)
+      expect(response_json['meta']['current_page']).to eq(2)
+      expect(response_json['meta']['prev_page']).to eq(1)
+      expect(response_json['meta']['next_page']).to eq(3)
+      expect(response_json['meta']['total_count']).to eq(10)
     end
   end
 
