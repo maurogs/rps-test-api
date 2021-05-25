@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   def index
+    render json: Game.all, each_serializer: GameSerializer
   end
 
   def play

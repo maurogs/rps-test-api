@@ -54,6 +54,18 @@ RSpec.describe "Games", type: :request do
     end
   end
 
+  describe "GET /index" do
+    it "returns http success" do
+      get "/games"
+      expect(response).to have_http_status(:success)
+    end
+
+    it "should respond to games" do
+      get "/games"
+      expect(response_json).to include('games')
+    end
+  end
+
   private
 
   def response_json
@@ -78,5 +90,9 @@ RSpec.describe "Games", type: :request do
       move: move,
       moved_at: Time.zone.now
     }
+  end
+
+  def random_move
+    Game::MOVES.sample
   end
 end
