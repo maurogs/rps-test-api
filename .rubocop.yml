@@ -30,7 +30,7 @@ Metrics/BlockLength:
     - 'config/routes/*'
     - 'config/environments/*'
     - '**/*.rake'
-    - 'test/**/*'
+    - 'spec/**/*'
   ExcludedMethods: ['class_methods']
 
 Metrics/ClassLength:
