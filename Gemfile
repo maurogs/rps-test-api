@@ -28,6 +28,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Serializer
 gem 'active_model_serializers', '~> 0.10.12'
 
+# Pagination
+gem 'will_paginate', '~> 3.3'
+gem 'api-pagination', '~> 4.8', '>= 4.8.2'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
